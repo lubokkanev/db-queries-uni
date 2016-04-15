@@ -231,8 +231,7 @@ JOIN movie ON movie.title = starsin.movietitle
 WHERE movie.studioname = 'MGM' AND year = 1995
 ;
 
--- 2.3
--- predisend name?
+-- 2.3 predisend name?
 SELECT studio.presc#
 FROM studio
 WHERE studio.name = 'MGM'
@@ -256,3 +255,24 @@ FROM movie AS m1
 CROSS JOIN movie AS m2
 WHERE m2.title = 'Star Wars' AND m1.length > m2.length
 ;
+
+-- 3.1
+SELECT NAME 
+FROM moviestar 
+WHERE gender = 'F' 
+  AND NAME IN (	SELECT NAME 
+				FROM movieexec 
+				WHERE networth > 1000000);
+
+-- 3.2
+SELECT name 
+FROM moviestar 
+WHERE name NOT IN (SELECT name FROM movieexec)
+;
+
+-- 3.3
+SELECT movie.title
+FROM movie
+WHERE movie.length > (SELECT movie.length FROM movie WHERE movie.title = 'Gone With the Wind')
+;
+
