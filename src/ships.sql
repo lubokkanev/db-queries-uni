@@ -277,3 +277,54 @@ SELECT ships.name
 FROM ships
 WHERE ships.name LIKE '% %' AND ships.name NOT LIKE '% % %'
 ; 
+
+-- 2.1
+SELECT SHIPS.name 
+FROM ships
+JOIN classes ON classes.class = ships.class
+WHERE classes.displacement > 35000
+;
+
+-- 2.2
+SELECT NAME, displacement, numguns 
+FROM outcomes 
+JOIN ships ON ship = NAME 
+JOIN classes ON ships.class = classes.class 
+WHERE battle = 'Guadalcanal';
+
+-- 2.3
+SELECT country 
+FROM classes 
+WHERE type = 'bb' 
+
+INTERSECT 
+
+SELECT country 
+FROM classes 
+WHERE type = 'bc'
+;
+
+-- or
+
+SELECT DISTINCT c1.country
+FROM classes c1 
+JOIN classes c2 ON c1.country = c2.country 
+WHERE c1.type = 'bb' AND c2.type = 'bc'
+;
+
+-- 2.4
+SELECT DISTINCT o1.ship 
+FROM outcomes o1 
+JOIN battles b1 ON o1.battle = b1.NAME 
+JOIN outcomes o2 ON o1.ship = o2.ship 
+JOIN battles b2 ON o2.battle = b2.NAME 
+WHERE o1.result = 'damaged' AND b1.date < b2.date
+;
+
+
+
+
+
+
+
+

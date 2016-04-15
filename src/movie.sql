@@ -215,3 +215,44 @@ FROM Movie
 WHERE studioName = 'Disney' AND year = 1990
 ORDER BY length, title
 ;
+
+-- 2.1
+SELECT moviestar.name
+FROM moviestar
+JOIN starsin ON starsin.starname = moviestar.name
+WHERE starsin.movietitle = 'Terms of Endearment'
+;
+
+-- 2.2
+SELECT moviestar.name
+FROM moviestar
+JOIN starsin ON starsin.starname = moviestar.name
+JOIN movie ON movie.title = starsin.movietitle
+WHERE movie.studioname = 'MGM' AND year = 1995
+;
+
+-- 2.3
+-- predisend name?
+SELECT studio.presc#
+FROM studio
+WHERE studio.name = 'MGM'
+;
+
+-- 2.4
+SELECT movie.title
+FROM movie
+WHERE (	SELECT movie.length
+		FROM movie
+		WHERE movie.title = 'Star Wars') < movie.length
+;
+
+select m1.title
+from movie m1, movie m2
+where m2.title = 'Star Wars' and m1.length > m2.length
+;
+
+SELECT m1.title
+FROM movie AS m1
+CROSS JOIN movie AS m2
+WHERE m2.title = 'Star Wars' AND m1.length > m2.length
+;

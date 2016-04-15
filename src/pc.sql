@@ -137,3 +137,54 @@ SELECT laptop.code, laptop.model, laptop.speed + laptop.ram + 10 * laptop.screen
 FROM laptop
 ORDER BY 'rating', laptop.code
 ;
+
+-- 2.1
+SELECT maker, speed 
+FROM product 
+JOIN laptop ON product.model = laptop.model 
+WHERE hd >= 9;
+
+-- 2.2
+SELECT product.model, price
+FROM product 
+JOIN laptop ON product.model = laptop.model 
+WHERE maker = 'B' 
+
+UNION 
+
+SELECT product.model, price 
+FROM product 
+JOIN pc ON product.model = pc.model 
+WHERE maker = 'B' 
+
+UNION
+
+SELECT product.model, price 
+FROM product 
+JOIN printer ON product.model = printer.model 
+WHERE maker = 'B' 
+
+ORDER BY price DESC
+;
+
+-- 2.3
+SELECT pc.hd
+FROM pc
+GROUP BY pc.hd
+HAVING COUNT(*) >= 2
+;
+
+-- 2.4
+SELECT DISTINCT p1.model, p2.model
+FROM pc AS p1
+CROSS JOIN pc AS p2
+WHERE p1.speed = p2.speed AND p1.ram = p2.ram AND p1.model < p2.model
+;
+
+-- 2.5
+SELECT DISTINCT product.maker
+FROM product
+JOIN pc ON pc.model = product.model
+JOIN pc AS p2 ON p2.model = product.model
+WHERE pc.speed > 1 AND p2.speed > 1 AND pc.code <> p2.code
+;
